@@ -1,0 +1,3 @@
+# Use libraries:
+# pip install fastapi uvicorn sqlalchemy alembic pydantic passlib python-jose[cryptography] python-multipart
+
