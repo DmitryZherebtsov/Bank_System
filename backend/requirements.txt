@@ -1,3 +1,6 @@
-# Use libraries:
-# pip install fastapi uvicorn sqlalchemy alembic pydantic passlib python-jose[cryptography] python-multipart
-
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+passlib[bcrypt]
+python-dotenv
