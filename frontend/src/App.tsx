@@ -7,7 +7,7 @@ import Register from "./form/register";
 import Dashboard from "./dashboard/dashboard";
 import Sidebar from "./sidebar/sidebar";
 import Atm from "./atm/atm";
-
+import NotLogged from './notlogged/notlogged'
 
 import './index.css'
 
@@ -31,6 +31,8 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard /> } />
 
           <Route path="/atm" element={<Atm /> } />
+
+          <Route path="/notlogged" element={<NotLogged /> } />
 
         </Routes>
 

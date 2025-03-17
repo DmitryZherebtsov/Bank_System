@@ -1,0 +1,12 @@
+.not_logged{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: calc(90vw); 
+}
+.not_logged_img{
+    width: 10em;
+    height: auto;
+}

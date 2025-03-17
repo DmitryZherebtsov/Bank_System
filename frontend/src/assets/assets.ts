@@ -13,6 +13,9 @@ import User from '../assets/user.svg'
 import Dots from '../assets/dots.svg'
 import Atm from '../assets/atm.svg'
 import Cool_Atm from '../assets/cool_atm.jpg'
+import Logout from '../assets/logout.svg'
+import NotLogged from '../assets/notlogged.png'
+import Locked from '../assets/locked-laptop.svg'
 
 export const icons = {
     Logo,
@@ -29,6 +32,9 @@ export const icons = {
     User,
     Dots,
     Atm,
-    Cool_Atm
+    Cool_Atm,
+    Logout,
+    NotLogged,
+    Locked
 
 }

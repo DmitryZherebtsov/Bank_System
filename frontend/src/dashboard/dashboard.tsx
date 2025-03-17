@@ -72,8 +72,10 @@ const Dashboard = () => {
 
                 <div>
                     <h1>Mój portfel</h1>
+                    <br />
                     <p> Monitoruj swój plan finansowy!</p>
-                    <p>Email: {userData?.email}</p>
+                    <br />
+                    <p> <b>Email:</b> <i>{userData?.email}</i> </p>
                     <br />
                     <hr />
                     <br />
