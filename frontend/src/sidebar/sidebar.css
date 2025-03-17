@@ -5,6 +5,7 @@
     background-color: #080325;
     color: aliceblue;
     flex-direction: column;
+    /* position: fixed; */
 }
 
 
@@ -45,7 +46,6 @@
     height: auto;
 }
 
-
 .navigacja li {
     padding: 1.5em;
     display: flex;
@@ -62,7 +62,8 @@
     height: 100%;
     text-decoration: none;
     color: aliceblue;
-    padding: 1em 0; 
+    padding: 0em; 
+    gap: 20px;
 }
 
 .navigacja li:hover {

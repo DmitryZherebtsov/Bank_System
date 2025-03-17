@@ -1,8 +1,9 @@
-import { Link } from 'react-router-dom'
 import './sidebar.css'
+import { Link } from 'react-router-dom'
 import { icons } from '../assets/assets'
 
 const sidebar = () => {
+
   return (
     <div className='sidebar_block'>
         <div className="content">
@@ -37,6 +38,13 @@ const sidebar = () => {
                             Dashboard
                         </Link>
                     </li>
+                    <li>
+                        <Link to="./atm" className="full-link">
+                            <img className='logs' src={icons.Atm} alt="" />
+                            ATM
+                        </Link>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -45,14 +53,14 @@ const sidebar = () => {
         <ul className='navigacja footer'>
             <li>
                 <img className='logs' src={icons.Settings} alt="" />
-                Settings
+                Ustawienia
             </li>
 
             <hr />
 
             <li>
                 <img className='logs' src={icons.User} alt="" />
-                Name
+                <h3>Konto</h3>
             </li>
         </ul>
 

@@ -28,7 +28,7 @@ const Register = () => {
 
                 if (loginResponse.ok) {
                     localStorage.setItem("token", loginData.access_token);
-                    navigate("./dashboard"); 
+                    navigate("/dashboard"); 
                 } else {
                     alert("Login failed: " + loginData.detail);
                 }

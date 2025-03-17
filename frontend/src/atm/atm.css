@@ -1,0 +1,84 @@
+
+.atm{
+    display: flex;
+    flex-direction: column;
+}
+
+.main_pic{
+    margin-top: 1em;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+}
+
+.main_pic_jpg{
+    width: 15em;
+    height: auto;
+}
+.greet{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.money_operations{
+    display: flex;
+    justify-content: center;
+    gap: 5em;
+}
+
+.withdraw_deposit{
+    padding: 2em;
+    box-shadow: 0 1px 2px 0 rgba(90, 90, 90, 0.2), 0 3px 10px 0 rgba(90, 90, 90, 0.19);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #5b54e4;
+}
+
+.money_op{
+    width: 10em;
+    height: auto;
+}
+
+
+.withdraw_deposit > input{
+    padding: 0.5em 1em;
+    font-size: 1em;
+}
+
+.withdraw_deposit > button{
+    padding: 0.5em 1em;
+    font-size: 1em;
+    border-radius: 2px;
+    border: none;
+}
+
+.info_money{
+    color: gray;
+}
+.exeption{
+    color: black;
+}
+
+.BtnMoney{
+    display: inline-block;
+    outline: 0;
+    cursor: pointer;
+    text-align: center;
+    border: 1px solid #babfc3;
+    font-family: Roboto;
+    padding: 7px 16px;
+    min-height: 36px;
+    min-width: 36px;
+    color: #202223;
+    background: #ffffff;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px;
+}
+.BtnMoney:hover {
+    background: #f6f6f7;
+    outline: 1px solid transparent;
+}

@@ -11,4 +11,32 @@
 .info_icons > div {
     display: flex;
     gap: 1em; 
+    cursor: pointer;
+}
+.icon_dots{
+    cursor: pointer;
+}
+
+
+.personal_dashboard{
+    margin: 2em;
+}
+.personal_info{
+    margin-top: 1em;
+}
+.card{
+    font-size: 1.5em;
+    width: 100%;
+    padding: 1em;
+    border-radius: 5px;
+    box-shadow: 0 1px 1px 0 rgba(54, 54, 54, 0.2), 0 5px 15px 0 rgba(54, 54, 54, 0.2);
+}
+.card_info{
+    display: flex;
+    justify-content: space-between;
+}    
+.card_info_balance{
+    display: flex;
+    justify-content: space-between;
+    /* font-weight: 600; */
 }

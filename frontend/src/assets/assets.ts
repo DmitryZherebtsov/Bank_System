@@ -10,6 +10,9 @@ import Login from '../assets/login.svg'
 import Register from '../assets/register.svg'
 import Transactions from '../assets/transactions.svg'
 import User from '../assets/user.svg'
+import Dots from '../assets/dots.svg'
+import Atm from '../assets/atm.svg'
+import Cool_Atm from '../assets/cool_atm.jpg'
 
 export const icons = {
     Logo,
@@ -23,6 +26,9 @@ export const icons = {
     Login,
     Register,
     Transactions,
-    User
+    User,
+    Dots,
+    Atm,
+    Cool_Atm
 
 }

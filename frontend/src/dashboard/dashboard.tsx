@@ -6,8 +6,8 @@ import "./dashboard.css"
 const Dashboard = () => {
     const [userData, setUserData] = useState<{ username: string; email: string } | null>(null);
     const [balance, setBalance] = useState<number | null>(null);
-    const [depositAmount, setDepositAmount] = useState<number | string>('');
-    const [withdrawAmount, setWithdrawAmount] = useState<number | string>('');
+    // const [depositAmount, setDepositAmount] = useState<number | string>('');
+    // const [withdrawAmount, setWithdrawAmount] = useState<number | string>('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,57 +50,8 @@ const Dashboard = () => {
         fetchData();
     }, [navigate]);
 
-    const handleDeposit = async () => {
-        const token = localStorage.getItem("token");
-        if (!token || !depositAmount) return;
     
-        try {
-            const response = await fetch("http://127.0.0.1:8000/account/deposit/", {
-                method: "PUT",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ amount: depositAmount }),
-            });
     
-            if (response.ok) {
-                const data = await response.json();
-                setBalance(data.balance);  
-                setDepositAmount(''); 
-            } else {
-                console.error("Error depositing:", await response.text());
-            }
-        } catch (error) {
-            console.error("Error depositing:", error);
-        }
-    };
-    
-    const handleWithdraw = async () => {
-        const token = localStorage.getItem("token");
-        if (!token || !withdrawAmount) return;
-    
-        try {
-            const response = await fetch("http://127.0.0.1:8000/account/withdraw/", {
-                method: "PUT",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ amount: withdrawAmount }),
-            });
-    
-            if (response.ok) {
-                const data = await response.json();
-                setBalance(data.balance);
-                setWithdrawAmount(''); 
-            } else {
-                console.error("Error withdrawing:", await response.text());
-            }
-        } catch (error) {
-            console.error("Error withdrawing:", error);
-        }
-    };
 
     return (
         <div>
@@ -115,31 +66,42 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <h1>Welcome, {userData?.username}</h1>
-            <p>Email: {userData?.email}</p>
-            <p>Balance: ${balance}</p>
 
-            <div>
-                <h3>Deposit</h3>
-                <input
-                    type="number"
-                    value={depositAmount}
-                    onChange={(e) => setDepositAmount(Number(e.target.value))}
-                    placeholder="Amount to deposit"
-                />
-                <button onClick={handleDeposit}>Deposit</button>
+
+            <div className="personal_dashboard">
+
+                <div>
+                    <h1>Mój portfel</h1>
+                    <p> Monitoruj swój plan finansowy!</p>
+                    <p>Email: {userData?.email}</p>
+                    <br />
+                    <hr />
+                    <br />
+
+                </div>
+
+                <div className="personal_info">
+                    <div className="card">
+                        <div className="card_info">
+                            <h4>👋 Cześć {userData?.username}</h4>
+                            <div> <img className="icon_dots" src={icons.Dots} alt="" /></div>
+                        </div>
+                        <br />
+                        <div className="card_info_balance">
+                            <p>Balance:</p>
+                            <h3> ${balance}</h3>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
-            <div>
-                <h3>Withdraw</h3>
-                <input
-                    type="number"
-                    value={withdrawAmount}
-                    onChange={(e) => setWithdrawAmount(Number(e.target.value))}
-                    placeholder="Amount to withdraw"
-                />
-                <button onClick={handleWithdraw}>Withdraw</button>
-            </div>
+
+
+
+            
+
+
         </div>
     );
 };
