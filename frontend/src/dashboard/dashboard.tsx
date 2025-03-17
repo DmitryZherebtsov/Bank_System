@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { icons } from "../assets/assets";
+import "./dashboard.css"
 
 const Dashboard = () => {
     const [userData, setUserData] = useState<{ username: string; email: string } | null>(null);
@@ -102,6 +104,17 @@ const Dashboard = () => {
 
     return (
         <div>
+
+            <div className="info_icons">
+                <div>
+                    <img src={icons.Inbox}  alt="" />
+                    <img src={icons.Scale}  alt="" />
+                </div>
+                <div>
+                    <img src={icons.Question} alt="" />
+                </div>
+            </div>
+
             <h1>Welcome, {userData?.username}</h1>
             <p>Email: {userData?.email}</p>
             <p>Balance: ${balance}</p>

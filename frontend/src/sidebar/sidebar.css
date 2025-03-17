@@ -1,0 +1,120 @@
+
+.sidebar_block{
+    width: 20vw;
+    height: 100vh;
+    background-color: #080325;
+    color: aliceblue;
+    flex-direction: column;
+}
+
+
+.navigacja li {
+    padding: 2em;
+    display: flex;
+    align-items: center;
+    position: relative; 
+    transition: background-color 0.3s ease-in-out; 
+}
+
+.navigacja li:hover {
+    background-color: #191A38;
+    cursor: pointer;
+}
+
+
+.greeting {
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 2em 1em;
+}
+
+.logo h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.greeting img {
+    height: 40px; 
+    cursor: pointer;
+}
+
+.logs{
+    width: 40px;
+    height: auto;
+}
+
+
+.navigacja li {
+    padding: 1.5em;
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: background-color 0.3s ease-in-out;
+    gap: 10px;
+    padding-left: 4em;
+}
+.navigacja .full-link {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: aliceblue;
+    padding: 1em 0; 
+}
+
+.navigacja li:hover {
+    background-color: #191A38;
+}
+
+.navigacja li:hover .full-link {
+    color: #4F46E5; 
+}
+
+
+
+.navigacja a {
+    position: relative;
+    text-decoration: none;
+    color: aliceblue;
+    
+    transition: color 0.3s ease-in-out; 
+}
+
+
+.navigacja li:hover a {
+    color: #4F46E5; 
+}
+
+.navigacja li::after { 
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 4px; 
+    width: 100%;
+    height: 2px;
+    background: #4F46E5;
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease-in-out;
+}
+
+.navigacja li:hover::after {
+    transform-origin: left;
+    transform: scaleX(1);
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer {
+    margin-top: auto;
+    padding:  5em 2em 0em 2em;
+}
+
