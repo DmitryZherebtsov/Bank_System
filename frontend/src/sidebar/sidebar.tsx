@@ -83,7 +83,7 @@ const Sidebar = () => {
             <ul className='navigacja footer'>
                 <li>
                     <img className='logs' src={icons.Settings} alt="" />
-                    Ustawienia
+                    <h3>Ustawienia</h3>
                 </li>
 
                 <hr />

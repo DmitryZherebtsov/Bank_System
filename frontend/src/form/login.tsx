@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const loginSchema = yup.object().shape({
-  email: yup.string().email("Невірний формат email").required("Email є обов'язковим"),
-  password: yup.string().required("Пароль є обов'язковим"),
+  email: yup.string().email("Nieprawidłowy format emaila").required("Email jest wymagany"),
+  password: yup.string().required("Hasło jest wymagane"),
 });
 
 interface LoginForm {
@@ -33,7 +33,7 @@ const Login = () => {
 
       const result = await response.json();
       if (response.ok) {
-        setMessage(`Ласкаво просимо!`);
+        setMessage(`Witamy!`);
 
         localStorage.setItem("token", result.access_token);
         
@@ -41,26 +41,26 @@ const Login = () => {
 
         navigate("/dashboard"); 
       } else {
-        setMessage(result.detail || "Помилка входу");
+        setMessage(result.detail || "Błąd logowania");
       }
     } catch (error) {
-      setMessage("Помилка підключення до сервера");
+      setMessage("Błąd połączenia z serwerem");
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-form">
-        <h2>Вхід</h2>
+        <h2>Logowanie</h2>
         {message && <p className="error-message">{message}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <input {...register("email")} placeholder="Email" className="input-field" />
           <p className="error-text">{errors.email?.message}</p>
 
-          <input {...register("password")} type="password" placeholder="Пароль" className="input-field" />
+          <input {...register("password")} type="password" placeholder="Hasło" className="input-field" />
           <p className="error-text">{errors.password?.message}</p>
 
-          <button type="submit" className="btn">Увійти</button>
+          <button type="submit" className="btn">Zaloguj się</button>
         </form>
       </div>
     </div>

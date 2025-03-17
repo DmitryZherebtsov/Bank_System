@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from "react"; 
 import { useNavigate } from "react-router-dom";
 import './register.css'
 
@@ -35,25 +35,25 @@ const Register = () => {
 
                     navigate("/dashboard");
                 } else {
-                    setMessage("Помилка входу: " + loginData.detail);
+                    setMessage("Błąd logowania: " + loginData.detail);
                 }
             } else {
-                setMessage("Помилка реєстрації");
+                setMessage("Błąd rejestracji");
             }
         } catch (error) {
-            setMessage("Помилка підключення до сервера");
+            setMessage("Błąd połączenia z serwerem");
         }
     };
 
     return (
         <div className="register-container">
             <div className="register-form">
-                <h2 className="text-xl font-bold mb-4">Реєстрація</h2>
+                <h2 className="text-xl font-bold mb-4">Rejestracja</h2>
                 {message && <p className="text-red-500">{message}</p>}
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <input
                         type="text"
-                        placeholder="Ім'я користувача"
+                        placeholder="Nazwa użytkownika"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         required
@@ -69,13 +69,13 @@ const Register = () => {
                     />
                     <input
                         type="password"
-                        placeholder="Пароль"
+                        placeholder="Hasło"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
                         className="input-field"
                     />
-                    <button type="submit" className="btn">Зареєструватися</button>
+                    <button type="submit" className="btn">Zarejestruj się</button>
                 </form>
             </div>
         </div>

@@ -1,5 +1,3 @@
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Login from "./form/login";
@@ -18,9 +16,7 @@ const App = () => {
     <div className="main">
       <Router>
 
-
         <Sidebar />
-
 
         <Routes>
 
@@ -35,7 +31,6 @@ const App = () => {
           <Route path="/notlogged" element={<NotLogged /> } />
 
         </Routes>
-
 
       </Router>
     </div>
