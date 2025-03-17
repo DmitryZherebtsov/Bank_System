@@ -40,3 +40,24 @@
     justify-content: space-between;
     /* font-weight: 600; */
 }
+
+
+.transactions {
+    margin-top: 20px;
+    margin: 2em;
+}
+
+.transactions ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.transactions li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.m_operation{
+    width: 5em;
+    height: auto;
+}

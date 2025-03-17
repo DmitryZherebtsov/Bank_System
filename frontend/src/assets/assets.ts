@@ -16,6 +16,8 @@ import Cool_Atm from '../assets/cool_atm.jpg'
 import Logout from '../assets/logout.svg'
 import NotLogged from '../assets/notlogged.png'
 import Locked from '../assets/locked-laptop.svg'
+import Deposit from '../assets/deposit.svg'
+import Withdraw from '../assets/withdraw.svg'
 
 export const icons = {
     Logo,
@@ -35,6 +37,8 @@ export const icons = {
     Cool_Atm,
     Logout,
     NotLogged,
-    Locked
+    Locked,
+    Deposit,
+    Withdraw
 
 }

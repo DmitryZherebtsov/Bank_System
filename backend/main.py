@@ -67,6 +67,30 @@ class Account(Base):
 
     user = relationship("User", back_populates="account")
 
+# Таблиця для транзакцій
+class Transaction(Base):
+    __tablename__ = "transactions"
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    amount = Column(Integer)
+    type = Column(String)  # Тип операції: deposit, withdraw
+    timestamp = Column(String, default=datetime.utcnow)
+
+    user = relationship("User", back_populates="transactions")
+
+# Додати відношення в User
+User.transactions = relationship("Transaction", back_populates="user")
+
+
+# Схема транзакції для відповіді
+class TransactionResponse(BaseModel):
+    amount: int
+    type: str
+    timestamp: str
+
+    class Config:
+        orm_mode = True
+
 
 class AccountResponse(BaseModel):
     balance: int
@@ -235,6 +259,7 @@ def get_account_me(current_user: User = Depends(get_current_user), db: Session =
 
 
 # Функція поповнення балансу
+# Функція поповнення балансу з транзакцією
 @app.put("/account/deposit/")
 def deposit(request: DepositRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     account = db.query(Account).filter(Account.user_id == current_user.id).first()
@@ -248,7 +273,33 @@ def deposit(request: DepositRequest, current_user: User = Depends(get_current_us
     db.commit()
     db.refresh(account)
 
+    # Створення транзакції
+    create_transaction(db, current_user.id, request.amount, "deposit")
+
     return {"message": f"Deposited {request.amount} to your account", "balance": account.balance}
+
+# Функція зняття коштів з транзакцією
+@app.put("/account/withdraw/") 
+def withdraw(request: WithdrawRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    account = db.query(Account).filter(Account.user_id == current_user.id).first()
+    if not account:
+        raise HTTPException(status_code=404, detail="Account not found")
+    
+    if request.amount <= 0:
+        raise HTTPException(status_code=400, detail="Amount must be greater than 0")
+    
+    if account.balance < request.amount:
+        raise HTTPException(status_code=400, detail="Insufficient funds")
+    
+    account.balance -= request.amount
+    db.commit()
+    db.refresh(account)
+
+    # Створення транзакції
+    create_transaction(db, current_user.id, request.amount, "withdraw")
+
+    return {"message": f"Withdrew {request.amount} from your account", "balance": account.balance}
+
 
 # Функція зняття коштів
 @app.put("/account/withdraw/")
@@ -268,3 +319,19 @@ def withdraw(request: WithdrawRequest, current_user: User = Depends(get_current_
     db.refresh(account)
 
     return {"message": f"Withdrew {request.amount} from your account", "balance": account.balance}
+
+
+
+
+# Функція для запису транзакцій у базу
+def create_transaction(db: Session, user_id: int, amount: int, transaction_type: str):
+    new_transaction = Transaction(user_id=user_id, amount=amount, type=transaction_type)
+    db.add(new_transaction)
+    db.commit()
+    db.refresh(new_transaction)
+
+
+@app.get("/transactions/", response_model=List[TransactionResponse])
+def get_transactions(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    transactions = db.query(Transaction).filter(Transaction.user_id == current_user.id).order_by(Transaction.timestamp.desc()).all()
+    return transactions
