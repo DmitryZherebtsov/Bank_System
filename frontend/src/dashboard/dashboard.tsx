@@ -107,7 +107,6 @@ const Dashboard = () => {
                     <ul>
                     {transactions.map((transaction, index) => (
                         <li key={index} style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                            {/* Відображаємо іконку в залежності від типу транзакції */}
                             {transaction.type === "deposit" ? (
                                 <img className="m_operation" src={icons.Deposit} />
                             ) : (
