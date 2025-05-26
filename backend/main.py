@@ -17,10 +17,6 @@ SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 
-
-
-
-
 # модель користувача
 class User(Base):
     __tablename__ = "users"
@@ -33,7 +29,6 @@ class User(Base):
 
     account = relationship("Account", uselist=False, back_populates="user")
 
-# схема  реєстрація
 class UserCreate(BaseModel):
     username: str  
     email: EmailStr 
@@ -42,7 +37,6 @@ class UserCreate(BaseModel):
     class Config:
         orm_mode = True  
 
-# логін схема
 class UserLogin(BaseModel):
     email: EmailStr  
     password: str  
@@ -58,7 +52,7 @@ class UserResponse(BaseModel):
     class Config:
         orm_mode = True
 
-# Рахунок
+
 class Account(Base):
     __tablename__ = "accounts"
     id = Column(Integer, primary_key=True, index=True)
@@ -67,7 +61,6 @@ class Account(Base):
 
     user = relationship("User", back_populates="account")
 
-# Таблиця для транзакцій
 class Transaction(Base):
     __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True)
@@ -78,11 +71,9 @@ class Transaction(Base):
 
     user = relationship("User", back_populates="transactions")
 
-# Додати відношення в User
 User.transactions = relationship("Transaction", back_populates="user")
 
 
-# Схема транзакції для відповіді
 class TransactionResponse(BaseModel):
     amount: int
     type: str
@@ -119,7 +110,6 @@ app.add_middleware(
     allow_headers=["*"], 
 )
 
-# хешування паролів bcrypt
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 def hash_password(password: str):
@@ -128,7 +118,7 @@ def hash_password(password: str):
 
 
 
-# сесія з бази даних
+# сесія з бд
 def get_db():
     db = SessionLocal()
     try:
@@ -323,7 +313,6 @@ def withdraw(request: WithdrawRequest, current_user: User = Depends(get_current_
 
 
 
-# Функція для запису транзакцій у базу
 def create_transaction(db: Session, user_id: int, amount: int, transaction_type: str):
     new_transaction = Transaction(user_id=user_id, amount=amount, type=transaction_type)
     db.add(new_transaction)
