@@ -1,4 +1,16 @@
 
+.dashboard{
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard_blocks{
+    display: flex;
+    flex-direction: row;
+}
+
+
+
 .info_icons{
     display: flex;
     justify-content: space-between;
@@ -19,6 +31,7 @@
 
 
 .personal_dashboard{
+    width: 50%;
     margin: 2em;
 }
 .personal_info{
@@ -30,6 +43,8 @@
     padding: 1em;
     border-radius: 5px;
     box-shadow: 0 1px 1px 0 rgba(54, 54, 54, 0.2), 0 5px 15px 0 rgba(54, 54, 54, 0.2);
+    background-color: #5255a3;
+    color: white;
 }
 .card_info{
     display: flex;
@@ -43,8 +58,20 @@
 
 
 .transactions {
-    margin-top: 20px;
+    width: 40%;
     margin: 2em;
+    padding: 2em;
+    max-height: 500px;
+    overflow-y: auto;  
+    background-color: #f5f5f5; 
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.377);
+}
+.brak_tr{
+    display: flex;
+    margin-top: 5em;
+    justify-self: center;
+    text-align: center;
 }
 
 .transactions ul {
@@ -60,4 +87,16 @@
 .m_operation{
     width: 5em;
     height: auto;
+}
+
+
+.transactions::-webkit-scrollbar {
+    width: 10px;
+}
+.transactions::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 6px;
+}
+.transactions::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
 }

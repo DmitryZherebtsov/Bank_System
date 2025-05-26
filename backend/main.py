@@ -25,7 +25,6 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, default=True)
-    is_verified = Column(Boolean, default=False)
 
     account = relationship("Account", uselist=False, back_populates="user")
 
@@ -52,6 +51,33 @@ class UserResponse(BaseModel):
     class Config:
         orm_mode = True
 
+class AdminUserResponse(BaseModel):
+    id: int
+    username: str
+    email: str
+
+    class Config:
+        orm_mode = True
+        
+class LastTransactionResponse(BaseModel):
+    amount: int
+    type: str
+    timestamp: str
+
+    class Config:
+        orm_mode = True
+
+class AdminUserDetailResponse(BaseModel):
+    id: int
+    username: str
+    balance: int
+    email: str
+    last_transaction: Optional[LastTransactionResponse]
+
+    class Config:
+        orm_mode = True
+
+
 
 class Account(Base):
     __tablename__ = "accounts"
@@ -66,7 +92,7 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"))
     amount = Column(Integer)
-    type = Column(String)  # Тип операції: deposit, withdraw
+    type = Column(String)  # z operacji mam: Wypłata, Wpłata
     timestamp = Column(String, default=datetime.utcnow)
 
     user = relationship("User", back_populates="transactions")
@@ -185,8 +211,11 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.email == user.email).first()
     if db_user is None or not pwd_context.verify(user.password, db_user.hashed_password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    if not db_user.is_active:
+        raise HTTPException(status_code=403, detail="User account is deactivated")
+
     
-    # Генерація токена
     access_token = create_access_token(data={"sub": db_user.username})
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -264,7 +293,7 @@ def deposit(request: DepositRequest, current_user: User = Depends(get_current_us
     db.refresh(account)
 
     # Створення транзакції
-    create_transaction(db, current_user.id, request.amount, "deposit")
+    create_transaction(db, current_user.id, request.amount, "Wpłata")
 
     return {"message": f"Deposited {request.amount} to your account", "balance": account.balance}
 
@@ -286,7 +315,7 @@ def withdraw(request: WithdrawRequest, current_user: User = Depends(get_current_
     db.refresh(account)
 
     # Створення транзакції
-    create_transaction(db, current_user.id, request.amount, "withdraw")
+    create_transaction(db, current_user.id, request.amount, "Wypłata")
 
     return {"message": f"Withdrew {request.amount} from your account", "balance": account.balance}
 
@@ -324,3 +353,42 @@ def create_transaction(db: Session, user_id: int, amount: int, transaction_type:
 def get_transactions(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     transactions = db.query(Transaction).filter(Transaction.user_id == current_user.id).order_by(Transaction.timestamp.desc()).all()
     return transactions
+
+
+
+
+
+
+
+@app.get("/admin/users/", response_model=List[AdminUserDetailResponse])
+def get_all_users_with_balance_and_last_tx(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    if current_user.email != "admin@gmail.com":
+        raise HTTPException(status_code=403, detail="Not authorized")
+
+    users = db.query(User).all()
+    results = []
+    for u in users:
+        account = db.query(Account).filter(Account.user_id == u.id).first()
+        last_tx = (
+            db.query(Transaction)
+            .filter(Transaction.user_id == u.id)
+            .order_by(Transaction.timestamp.desc())
+            .first()
+        )
+        last_tx_response = None
+        if last_tx:
+            last_tx_response = LastTransactionResponse(
+                amount=last_tx.amount,
+                type=last_tx.type,
+                timestamp=last_tx.timestamp,
+            )
+        results.append(
+            AdminUserDetailResponse(
+                id=u.id,
+                username=u.username,
+                email=u.email,
+                balance=account.balance if account else 0,
+                last_transaction=last_tx_response,
+            )
+        )
+    return results

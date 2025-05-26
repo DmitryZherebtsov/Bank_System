@@ -23,7 +23,7 @@
 .money_operations{
     display: flex;
     justify-content: center;
-    gap: 5em;
+    gap: 2em;
 }
 
 .withdraw_deposit{
@@ -45,6 +45,7 @@
 .withdraw_deposit > input{
     padding: 0.5em 1em;
     font-size: 1em;
+    margin-top: 0.5em;
 }
 
 .withdraw_deposit > button{

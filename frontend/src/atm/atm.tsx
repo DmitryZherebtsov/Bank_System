@@ -32,7 +32,6 @@ const atm = () => {
                     return;
                 }
 
-                // Отримуємо баланс користувача
                 const balanceResponse = await fetch("http://127.0.0.1:8000/account/me", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
@@ -128,7 +127,7 @@ const atm = () => {
                         type="number"
                         value={depositAmount}
                         onChange={(e) => setDepositAmount(Number(e.target.value))}
-                        placeholder="Amount to deposit"
+                        placeholder="Kwota do wpłaty"
                     />
                     <br />
                     <button className="BtnMoney" onClick={handleDeposit}>Wpłacić</button>
@@ -144,7 +143,7 @@ const atm = () => {
                         type="number"
                         value={withdrawAmount}
                         onChange={(e) => setWithdrawAmount(Number(e.target.value))}
-                        placeholder="Amount to withdraw"/>
+                        placeholder="Kwota do wypłaty"/>
                         <br />
                     <button className="BtnMoney" onClick={handleWithdraw}>Wypłacić</button>
                     

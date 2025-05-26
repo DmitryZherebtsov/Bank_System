@@ -8,6 +8,7 @@ import Atm from "./atm/atm";
 import NotLogged from './notlogged/notlogged'
 
 import './index.css'
+import AdminPanel from "./adminpanel/AdminPanel";
 
 const App = () => {
 
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/atm" element={<Atm /> } />
 
           <Route path="/notlogged" element={<NotLogged /> } />
+
+          <Route path="/admin/users/" element={<AdminPanel /> } />
 
         </Routes>
 
