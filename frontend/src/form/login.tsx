@@ -31,7 +31,7 @@ const Login = () => {
         body: JSON.stringify(data),
       });
 
-      const result = await response.json();
+      const result = await response.json(); // тут мій токен 
       if (response.ok) {
         setMessage(`Witamy!`);
 

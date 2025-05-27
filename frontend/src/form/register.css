@@ -17,3 +17,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
+.text-red-500{
+    color: red;
+}

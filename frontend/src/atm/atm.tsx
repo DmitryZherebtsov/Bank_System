@@ -13,7 +13,7 @@ const atm = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("token"); //sprawdzam czy użytk jest auth
             if (!token) {
                 navigate("/login");
                 return;
