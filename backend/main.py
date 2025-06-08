@@ -162,25 +162,21 @@ def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     return users
 
 
-# Реєстрація
+
 @app.post("/auth/register/")
 def register(user: UserCreate, db: Session = Depends(get_db)):
     existing_user = db.query(User).filter(User.email == user.email).first()
     if existing_user:
         raise HTTPException(status_code=400, detail="Email already registered!")
-
-    # Створення нового користувача
     new_user = User(
         username=user.username,
         email=user.email,
         hashed_password=hash_password(user.password)
     )
-
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
 
-    # створення нового рахунку з початковим балансом 10 000 долярів
     new_account = Account(
         user_id=new_user.id,
         balance=10000  
@@ -277,8 +273,6 @@ def get_account_me(current_user: User = Depends(get_current_user), db: Session =
 
 
 
-# Функція поповнення балансу
-# Функція поповнення балансу з транзакцією
 @app.put("/account/deposit/")
 def deposit(request: DepositRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     account = db.query(Account).filter(Account.user_id == current_user.id).first()
@@ -292,29 +286,24 @@ def deposit(request: DepositRequest, current_user: User = Depends(get_current_us
     db.commit()
     db.refresh(account)
 
-    # Створення транзакції
     create_transaction(db, current_user.id, request.amount, "Wpłata")
 
     return {"message": f"Deposited {request.amount} to your account", "balance": account.balance}
 
-# Функція зняття коштів з транзакцією
+
 @app.put("/account/withdraw/") 
 def withdraw(request: WithdrawRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
     account = db.query(Account).filter(Account.user_id == current_user.id).first()
     if not account:
         raise HTTPException(status_code=404, detail="Account not found")
-    
     if request.amount <= 0:
         raise HTTPException(status_code=400, detail="Amount must be greater than 0")
     
     if account.balance < request.amount:
         raise HTTPException(status_code=400, detail="Insufficient funds")
-    
     account.balance -= request.amount
     db.commit()
     db.refresh(account)
-
-    # Створення транзакції
     create_transaction(db, current_user.id, request.amount, "Wypłata")
 
     return {"message": f"Withdrew {request.amount} from your account", "balance": account.balance}
